@@ -5,6 +5,8 @@ services:
       context: .
     ports:
       - "3000:3000"
+    volumes:
+    - "$PWD/files:/app/files"
     restart: unless-stopped
     depends_on:
       - tari
