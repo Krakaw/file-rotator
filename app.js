@@ -1,17 +1,14 @@
 const express = require('express')
 const path = require('path')
-const cookieParser = require('cookie-parser')
 const logger = require('morgan')
-
 const fs = require('fs')
 
 const app = express()
-
 app.use(logger('dev'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'files')))
+app.get('/', (req, res) => {
+  return res.sendStatus(200)
+})
 app.use((req, res) => {
   const filesDir = path.join(__dirname, 'files', req.url)
   const filename = path.basename(filesDir)

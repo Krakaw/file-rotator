@@ -14,9 +14,3 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
-  tari:
-    image: quay.io/krakaw/tari-docker:latest
-    volumes:
-      - "$PWD/data/tari:/root/.tari"
-    stdin_open: true
-    tty: true
