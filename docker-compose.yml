@@ -8,8 +8,6 @@ services:
     volumes:
     - "$PWD/files:/app/files"
     restart: unless-stopped
-    depends_on:
-      - tari
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000"]
       interval: 10s
