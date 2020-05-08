@@ -37,6 +37,7 @@ app.use((req, res) => {
     const chosenFile = possibleFiles[randomIndex]
 
     const outputFilePath = path.join(basePath, chosenFile)
+    res.header('X-Original-Filename', chosenFile)
     return res.sendFile(outputFilePath)
   })
 })
