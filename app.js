@@ -11,9 +11,19 @@ app.get('/', (req, res) => {
 })
 app.use((req, res) => {
   const filesDir = path.join(__dirname, 'files', req.url)
+  // Check if the req.url is a path
+  if (fs.existsSync(filesDir) && fs.lstatSync(filesDir).isDirectory() && fs.existsSync(`${filesDir}/.index`)) {
+    const files = fs.readdirSync(filesDir)
+    return res.json(files.filter(f => f.indexOf('.') !== 0))
+  }
+
   const filename = path.basename(filesDir)
+
   const index = filename.lastIndexOf('.')
   const basename = filename.slice(0, index)
+  if (!basename) {
+    return res.sendStatus(404)
+  }
   const ext = filename.slice(index + 1)
 
   const basePath = path.dirname(filesDir)
@@ -26,7 +36,7 @@ app.use((req, res) => {
     }
     const possibleFiles = []
     files.forEach(file => {
-      if (regex.test(file)) {
+      if (regex.test(file) || file === filename) {
         possibleFiles.push(file)
       }
     })
